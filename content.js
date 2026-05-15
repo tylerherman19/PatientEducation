@@ -12,42 +12,75 @@
 const CLINICS = [
   {
     id: "clinic1",
-    name: "Minnesota Head & Neck Pain Clinic - Location 1",
-    address: "ADDRESS LINE HERE",
-    cityStateZip: "CITY, STATE ZIP HERE",
-    phone: "PHONE HERE",
+    name: "St. Paul, MN Pain Clinic",
+    address: "2550 University Ave W, Suite 189S",
+    cityStateZip: "St. Paul, Minnesota 55414",
+    phone: "(763) 233-7252",
+    fax: "(763) 577-1375",
+    hours: [
+      "Monday: 8:00AM – 5:00PM",
+      "Tuesday: 8:00AM – 5:00PM",
+      "Wednesday: 8:00AM – 5:00PM",
+      "Thursday: 8:00AM – 5:00PM",
+      "Friday: 8:00AM – 5:00PM"
+    ],
+    cta: "Schedule A Visit",
     website: "WWW.MHNPC.COM"
   },
   {
     id: "clinic2",
-    name: "Minnesota Head & Neck Pain Clinic - Location 2",
-    address: "ADDRESS LINE HERE",
-    cityStateZip: "CITY, STATE ZIP HERE",
-    phone: "PHONE HERE",
+    name: "Plymouth, MN Pain Clinic",
+    address: "3475 Plymouth Blvd, Suite 200",
+    cityStateZip: "Plymouth, Minnesota 55447",
+    phone: "(763) 233-7252",
+    fax: "(763) 577-1375",
+    hours: [
+      "Monday: 7:00AM – 5:00PM",
+      "Tuesday: 8:00AM – 5:00PM",
+      "Wednesday: 8:00AM – 5:00PM",
+      "Thursday: 8:00AM – 7:00PM",
+      "Friday: 8:00AM – 2:00PM"
+    ],
+    cta: "Schedule A Visit",
     website: "WWW.MHNPC.COM"
   },
   {
     id: "clinic3",
-    name: "Minnesota Head & Neck Pain Clinic - Location 3",
-    address: "ADDRESS LINE HERE",
-    cityStateZip: "CITY, STATE ZIP HERE",
-    phone: "PHONE HERE",
+    name: "Burnsville, MN Pain Clinic",
+    address: "675 East Nicollet Blvd, Suite 255",
+    cityStateZip: "Burnsville, Minnesota 55337",
+    phone: "(763) 233-7252",
+    fax: "(763) 577-1375",
+    hours: [
+      "Monday: 7:00AM – 5:00PM",
+      "Tuesday: 8:00AM – 7:00PM",
+      "Wednesday: 7:00AM – 5:00PM",
+      "Thursday: 8:00AM – 7:00PM",
+      "Friday: 7:00AM – 2:00PM"
+    ],
+    cta: "Schedule A Visit",
     website: "WWW.MHNPC.COM"
   },
   {
     id: "clinic4",
-    name: "Minnesota Head & Neck Pain Clinic - Location 4",
-    address: "ADDRESS LINE HERE",
-    cityStateZip: "CITY, STATE ZIP HERE",
-    phone: "PHONE HERE",
+    name: "St. Cloud Outreach",
+    address: "622 Roosevelt Road, Suite 120",
+    cityStateZip: "St. Cloud, Minnesota 56301",
+    phone: "(763) 233-7252",
+    fax: "(763) 577-1375",
+    hours: ["Open every Monday: 9:00AM – 4:00PM"],
+    cta: "Schedule A Visit",
     website: "WWW.MHNPC.COM"
   },
   {
     id: "clinic5",
-    name: "Minnesota Head & Neck Pain Clinic - Location 5",
-    address: "ADDRESS LINE HERE",
-    cityStateZip: "CITY, STATE ZIP HERE",
-    phone: "PHONE HERE",
+    name: "Woodbury Outreach Clinic",
+    address: "3100 Woodbury Dr",
+    cityStateZip: "Woodbury, MN 55129",
+    phone: "(651) 332-7474",
+    fax: "(651) 332-7475",
+    hours: ["Open every Friday: 9:00AM – 4:00PM"],
+    cta: "Schedule A Visit",
     website: "WWW.MHNPC.COM"
   }
 ];
