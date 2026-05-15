@@ -1,0 +1,695 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Patient Education Generator</title>
+  <style>
+    :root {
+      --bg: #f3f4f6;
+      --panel-bg: #ffffff;
+      --border: #d1d5db;
+      --border-soft: #e5e7eb;
+      --text: #111827;
+      --muted: #4b5563;
+      --accent: #1d4ed8;
+      --accent-hover: #1e40af;
+      --warn-bg: #fef3c7;
+      --warn-border: #f59e0b;
+      --warn-text: #92400e;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter",
+              "Helvetica Neue", Arial, sans-serif;
+      --page-w: 8.5in;
+      --page-h: 11in;
+      --page-margin: 0.85in;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 24px;
+      padding: 24px;
+      min-height: 100vh;
+      align-items: start;
+    }
+
+    /* ---------- Controls panel ---------- */
+    .controls {
+      background: var(--panel-bg);
+      border: 1px solid var(--border-soft);
+      border-radius: 10px;
+      padding: 22px 20px;
+      position: sticky;
+      top: 24px;
+    }
+
+    .controls h1 {
+      font-size: 20px;
+      margin: 0 0 4px;
+      letter-spacing: -0.01em;
+    }
+    .controls .subtitle {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .field {
+      display: block;
+      margin-bottom: 14px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .field span {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .field select {
+      width: 100%;
+      font-family: inherit;
+      font-size: 14px;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--text);
+    }
+
+    .button-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    button {
+      font-family: inherit;
+      font-size: 14px;
+      padding: 9px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      cursor: pointer;
+    }
+    button:hover { background: #f9fafb; }
+    button.primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    button.primary:hover { background: var(--accent-hover); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .note {
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* ---------- Preview area ---------- */
+    .preview-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      padding-bottom: 40px;
+    }
+
+    .fit-warning {
+      background: var(--warn-bg);
+      border: 1px solid var(--warn-border);
+      color: var(--warn-text);
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      max-width: var(--page-w);
+      width: 100%;
+    }
+
+    .preview {
+      width: var(--page-w);
+      min-height: var(--page-h);
+      background: #ffffff;
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.05);
+      padding: var(--page-margin);
+      color: #111;
+      font-size: 10.5pt;
+      line-height: 1.45;
+    }
+
+    .placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(var(--page-h) - 2 * var(--page-margin));
+      color: #6b7280;
+      text-align: center;
+      font-size: 13pt;
+    }
+
+    /* ---------- Handout content styles ---------- */
+    .letterhead {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .letterhead img {
+      max-height: 0.7in;
+      max-width: 2.5in;
+      object-fit: contain;
+    }
+    .letterhead-info {
+      font-size: 9.5pt;
+      line-height: 1.35;
+      color: #111;
+    }
+    .letterhead-info .clinic-name {
+      font-weight: 700;
+      font-size: 11pt;
+      margin-bottom: 2px;
+    }
+    .handout-rule {
+      border: none;
+      border-top: 1px solid #9ca3af;
+      margin: 8px 0 12px;
+    }
+    .handout-title {
+      text-align: center;
+      font-size: 13pt;
+      font-weight: 700;
+      margin: 4px 0 10px;
+    }
+    .handout h3 {
+      font-size: 11pt;
+      font-weight: 700;
+      margin: 10px 0 4px;
+    }
+    .handout p {
+      margin: 0 0 6px;
+    }
+    .handout ol {
+      margin: 4px 0 6px 1.1em;
+      padding: 0;
+    }
+    .handout ol li {
+      margin-bottom: 5px;
+    }
+    .handout ol li strong {
+      display: inline;
+    }
+    .handout ul {
+      margin: 4px 0 6px 1.1em;
+      padding: 0;
+    }
+    .handout ul li {
+      margin-bottom: 3px;
+    }
+    .handout .closing {
+      text-align: center;
+      margin: 10px 0 6px;
+      font-style: italic;
+    }
+    .handout .footer {
+      margin-top: 8px;
+      padding-top: 6px;
+      border-top: 1px solid #d1d5db;
+      text-align: center;
+      font-size: 9pt;
+      color: #4b5563;
+    }
+
+    /* ---------- Responsive (narrow screens) ---------- */
+    @media (max-width: 1100px) {
+      .app { grid-template-columns: 1fr; }
+      .controls { position: static; }
+      .preview {
+        transform: scale(0.85);
+        transform-origin: top center;
+      }
+    }
+
+    /* ---------- Print ---------- */
+    @media print {
+      :root { --page-margin: 0.85in; }
+      body { background: #fff; }
+      .controls, .fit-warning, .preview-area > .fit-warning,
+      button, .note { display: none !important; }
+      .app {
+        display: block;
+        padding: 0;
+        margin: 0;
+        min-height: auto;
+      }
+      .preview-area {
+        padding: 0;
+        gap: 0;
+      }
+      .preview {
+        width: auto;
+        min-height: auto;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+        transform: none !important;
+      }
+      @page {
+        size: letter;
+        margin: 0.85in;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app">
+
+    <aside class="controls">
+      <h1>Patient Education Generator</h1>
+      <p class="subtitle">Create a branded one-page handout for patients.</p>
+
+      <label class="field">
+        <span>Select Clinic Location</span>
+        <select id="clinic"></select>
+      </label>
+
+      <label class="field">
+        <span>Select Diagnosis</span>
+        <select id="diagnosis"></select>
+      </label>
+
+      <label class="field">
+        <span>Select Handout Type</span>
+        <select id="variant">
+          <option value="general">General Overview</option>
+          <option value="selfCare">Self-Care Instructions</option>
+          <option value="firstAppointment">After First Appointment</option>
+          <option value="homeCare">Home Care Focus</option>
+        </select>
+      </label>
+
+      <div class="button-row">
+        <button id="btn-generate" class="primary" type="button">Generate One-Pager</button>
+        <button id="btn-export" type="button">Export to Word (.docx)</button>
+        <button id="btn-print" type="button">Print</button>
+      </div>
+
+      <p class="note">No patient information should be entered into this tool.</p>
+    </aside>
+
+    <section class="preview-area">
+      <div id="fitWarning" class="fit-warning" hidden>
+        Warning: This handout may not fit on one page.
+      </div>
+      <article id="preview" class="preview" aria-live="polite">
+        <div class="placeholder">
+          Select a clinic, diagnosis, and handout type to generate a one-page handout.
+        </div>
+      </article>
+    </section>
+
+  </div>
+
+  <script src="content.js"></script>
+  <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
+  <script>
+  (function () {
+    "use strict";
+
+    /* ----------------------------- DOM refs ----------------------------- */
+    const clinicSelect    = document.getElementById("clinic");
+    const diagnosisSelect = document.getElementById("diagnosis");
+    const variantSelect   = document.getElementById("variant");
+    const generateBtn     = document.getElementById("btn-generate");
+    const exportBtn       = document.getElementById("btn-export");
+    const printBtn        = document.getElementById("btn-print");
+    const preview         = document.getElementById("preview");
+    const fitWarning      = document.getElementById("fitWarning");
+
+    /* state: the most recently generated payload (used by export) */
+    let lastGenerated = null;
+
+    /* --------------------------- Populate UI ---------------------------- */
+    function populateClinics() {
+      CLINICS.forEach(c => {
+        const opt = document.createElement("option");
+        opt.value = c.id;
+        opt.textContent = c.name;
+        clinicSelect.appendChild(opt);
+      });
+    }
+    function populateDiagnoses() {
+      Object.values(CONTENT).forEach(dx => {
+        const opt = document.createElement("option");
+        opt.value = dx.id;
+        opt.textContent = dx.label;
+        diagnosisSelect.appendChild(opt);
+      });
+    }
+    populateClinics();
+    populateDiagnoses();
+
+    /* ----------------------- Helpers ------------------------------------ */
+    function getSelected() {
+      const clinic   = CLINICS.find(c => c.id === clinicSelect.value);
+      const diagnosis = CONTENT[diagnosisSelect.value];
+      const variantKey = variantSelect.value;
+      const variant = diagnosis && diagnosis.variants[variantKey];
+      return { clinic, diagnosis, variantKey, variant };
+    }
+
+    function variantLabel(key) {
+      return ({
+        general: "General Overview",
+        selfCare: "Self-Care Instructions",
+        firstAppointment: "After First Appointment",
+        homeCare: "Home Care Focus"
+      })[key] || key;
+    }
+
+    function slugify(s) {
+      return s
+        .replace(/&/g, "and")
+        .replace(/[^a-zA-Z0-9]+/g, "_")
+        .replace(/^_+|_+$/g, "");
+    }
+
+    function fileName(diagnosis, variantKey) {
+      return slugify(diagnosis.label) + "_" + slugify(variantLabel(variantKey)) + ".docx";
+    }
+
+    /* --------------------- Render preview (HTML) ------------------------ */
+    function renderPreview() {
+      const { clinic, diagnosis, variantKey, variant } = getSelected();
+      if (!clinic || !diagnosis || !variant) return;
+
+      const tipsHtml = variant.tips.map(t =>
+        `<li><strong>${escapeHtml(t.heading)}.</strong> ${escapeHtml(t.body)}</li>`
+      ).join("");
+
+      const introHtml = variant.intro.map(p =>
+        `<p>${escapeHtml(p)}</p>`
+      ).join("");
+
+      const callHtml = variant.whenToCall.map(b =>
+        `<li>${escapeHtml(b)}</li>`
+      ).join("");
+
+      preview.innerHTML = `
+        <div class="handout">
+          <header class="letterhead">
+            <img src="assets/letterhead_logo.png" alt="">
+            <div class="letterhead-info">
+              <div class="clinic-name">${escapeHtml(clinic.name)}</div>
+              <div>${escapeHtml(clinic.address)}</div>
+              <div>${escapeHtml(clinic.cityStateZip)}</div>
+              <div>${escapeHtml(clinic.phone)} &middot; ${escapeHtml(clinic.website)}</div>
+            </div>
+          </header>
+          <hr class="handout-rule">
+          <h2 class="handout-title">${escapeHtml(diagnosis.title)}</h2>
+
+          <h3>What You Should Know</h3>
+          ${introHtml}
+
+          <h3>Your Self-Care Steps</h3>
+          <ol>${tipsHtml}</ol>
+
+          <h3>When to Call Us</h3>
+          <ul>${callHtml}</ul>
+
+          <p class="closing">${escapeHtml(variant.closing)}</p>
+
+          <div class="footer">${escapeHtml(clinic.website)}</div>
+        </div>
+      `;
+
+      lastGenerated = { clinic, diagnosis, variantKey, variant };
+      exportBtn.disabled = false;
+      printBtn.disabled = false;
+
+      // Run fit check after the browser has painted.
+      requestAnimationFrame(checkPageFit);
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    /* --------------------- Page-fit warning ---------------------------- */
+    // 1 CSS inch = 96 CSS pixels. Page is 11 inches tall.
+    const PAGE_HEIGHT_PX = 11 * 96;
+    function checkPageFit() {
+      if (!lastGenerated) { fitWarning.hidden = true; return; }
+      // Allow a tiny tolerance for sub-pixel rounding.
+      const overflows = preview.offsetHeight > PAGE_HEIGHT_PX + 2;
+      fitWarning.hidden = !overflows;
+    }
+    window.addEventListener("resize", checkPageFit);
+
+    /* --------------------- Word export --------------------------------- */
+    async function fetchLogoBytes() {
+      try {
+        const resp = await fetch("assets/letterhead_logo.png");
+        if (!resp.ok) return null;
+        const buf = await resp.arrayBuffer();
+        // Reject the tiny built-in placeholder (<200 bytes is our 1x1 PNG).
+        if (buf.byteLength < 200) return null;
+        return buf;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    async function exportToWord() {
+      if (!lastGenerated) return;
+      if (typeof docx === "undefined") {
+        alert("Word export library failed to load. Make sure you are online, or open the site from GitHub Pages.");
+        return;
+      }
+      const { clinic, diagnosis, variantKey, variant } = lastGenerated;
+
+      const {
+        Document, Paragraph, TextRun, ImageRun, Packer,
+        AlignmentType, BorderStyle, LevelFormat,
+        convertInchesToTwip, HeightRule
+      } = docx;
+
+      // Size helpers (docx font sizes are in half-points).
+      const SIZE_BODY    = 21;   // 10.5pt
+      const SIZE_TITLE   = 26;   // 13pt
+      const SIZE_HEADING = 22;   // 11pt
+      const SIZE_SMALL   = 18;   // 9pt
+      const FONT         = "Calibri";
+
+      const logoBytes = await fetchLogoBytes();
+
+      const children = [];
+
+      /* ---------- Letterhead block ---------- */
+      if (logoBytes) {
+        children.push(new Paragraph({
+          alignment: AlignmentType.LEFT,
+          spacing: { after: 80 },
+          children: [
+            new ImageRun({
+              data: logoBytes,
+              transformation: { width: 220, height: 60 }
+            })
+          ]
+        }));
+      }
+
+      children.push(new Paragraph({
+        spacing: { after: 0 },
+        children: [new TextRun({ text: clinic.name, bold: true, size: SIZE_HEADING, font: FONT })]
+      }));
+      children.push(new Paragraph({
+        spacing: { after: 0 },
+        children: [new TextRun({ text: clinic.address, size: SIZE_BODY, font: FONT })]
+      }));
+      children.push(new Paragraph({
+        spacing: { after: 0 },
+        children: [new TextRun({ text: clinic.cityStateZip, size: SIZE_BODY, font: FONT })]
+      }));
+      children.push(new Paragraph({
+        spacing: { after: 120 },
+        children: [new TextRun({
+          text: clinic.phone + "  ·  " + clinic.website,
+          size: SIZE_BODY, font: FONT
+        })]
+      }));
+
+      /* ---------- Horizontal rule ---------- */
+      children.push(new Paragraph({
+        spacing: { after: 120 },
+        border: {
+          bottom: { color: "9CA3AF", space: 1, style: BorderStyle.SINGLE, size: 6 }
+        }
+      }));
+
+      /* ---------- Title ---------- */
+      children.push(new Paragraph({
+        alignment: AlignmentType.CENTER,
+        spacing: { after: 200 },
+        children: [new TextRun({ text: diagnosis.title, bold: true, size: SIZE_TITLE, font: FONT })]
+      }));
+
+      /* ---------- What You Should Know ---------- */
+      children.push(headingParagraph("What You Should Know", SIZE_HEADING, FONT));
+      variant.intro.forEach(p => {
+        children.push(new Paragraph({
+          spacing: { after: 100 },
+          children: [new TextRun({ text: p, size: SIZE_BODY, font: FONT })]
+        }));
+      });
+
+      /* ---------- Your Self-Care Steps (numbered) ---------- */
+      children.push(headingParagraph("Your Self-Care Steps", SIZE_HEADING, FONT));
+      variant.tips.forEach(t => {
+        children.push(new Paragraph({
+          numbering: { reference: "tip-numbering", level: 0 },
+          spacing: { after: 80 },
+          children: [
+            new TextRun({ text: t.heading + ". ", bold: true, size: SIZE_BODY, font: FONT }),
+            new TextRun({ text: t.body, size: SIZE_BODY, font: FONT })
+          ]
+        }));
+      });
+
+      /* ---------- When to Call Us (bulleted) ---------- */
+      children.push(headingParagraph("When to Call Us", SIZE_HEADING, FONT));
+      variant.whenToCall.forEach(b => {
+        children.push(new Paragraph({
+          bullet: { level: 0 },
+          spacing: { after: 40 },
+          children: [new TextRun({ text: b, size: SIZE_BODY, font: FONT })]
+        }));
+      });
+
+      /* ---------- Closing ---------- */
+      children.push(new Paragraph({
+        alignment: AlignmentType.CENTER,
+        spacing: { before: 160, after: 80 },
+        children: [new TextRun({ text: variant.closing, italics: true, size: SIZE_BODY, font: FONT })]
+      }));
+
+      /* ---------- Footer ---------- */
+      children.push(new Paragraph({
+        alignment: AlignmentType.CENTER,
+        spacing: { before: 80 },
+        border: {
+          top: { color: "D1D5DB", space: 4, style: BorderStyle.SINGLE, size: 4 }
+        },
+        children: [new TextRun({ text: clinic.website, size: SIZE_SMALL, color: "4B5563", font: FONT })]
+      }));
+
+      const doc = new Document({
+        creator: "Patient Education Generator",
+        title: diagnosis.title,
+        styles: {
+          default: {
+            document: {
+              run: { font: FONT, size: SIZE_BODY }
+            }
+          }
+        },
+        numbering: {
+          config: [{
+            reference: "tip-numbering",
+            levels: [{
+              level: 0,
+              format: LevelFormat.DECIMAL,
+              text: "%1.",
+              alignment: AlignmentType.LEFT,
+              style: {
+                paragraph: {
+                  indent: { left: convertInchesToTwip(0.35), hanging: convertInchesToTwip(0.25) }
+                }
+              }
+            }]
+          }]
+        },
+        sections: [{
+          properties: {
+            page: {
+              size: {
+                width:  convertInchesToTwip(8.5),
+                height: convertInchesToTwip(11)
+              },
+              margin: {
+                top:    convertInchesToTwip(0.85),
+                right:  convertInchesToTwip(0.85),
+                bottom: convertInchesToTwip(0.85),
+                left:   convertInchesToTwip(0.85)
+              }
+            }
+          },
+          children
+        }]
+      });
+
+      const blob = await Packer.toBlob(doc);
+      triggerDownload(blob, fileName(diagnosis, variantKey));
+    }
+
+    function headingParagraph(text, size, font) {
+      return new docx.Paragraph({
+        spacing: { before: 160, after: 80 },
+        children: [new docx.TextRun({ text, bold: true, size, font })]
+      });
+    }
+
+    function triggerDownload(blob, name) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    /* --------------------- Wire up buttons ----------------------------- */
+    generateBtn.addEventListener("click", renderPreview);
+    exportBtn.addEventListener("click", () => {
+      exportToWord().catch(err => {
+        console.error(err);
+        alert("Sorry, something went wrong creating the Word file. Try Generate One-Pager first, then try again.");
+      });
+    });
+    printBtn.addEventListener("click", () => {
+      if (!lastGenerated) renderPreview();
+      window.print();
+    });
+
+    // Until the first generate, disable export / print.
+    exportBtn.disabled = true;
+    printBtn.disabled = true;
+  })();
+  </script>
+
+</body>
+</html>
