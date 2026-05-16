@@ -377,6 +377,9 @@
       <div id="fitWarning" class="fit-warning" hidden>
         Warning: This handout may not fit on one printed page. Shorten the content or use the compact layout.
       </div>
+      <div id="wordCountWarning" class="fit-warning" hidden>
+        Warning: This guide is under 700 words and may be too brief for full patient education.
+      </div>
       <article id="preview" class="preview" aria-live="polite">
         <div class="placeholder">
           Select a clinic, diagnosis, and handout type to generate a one-page handout.
@@ -401,6 +404,7 @@
     const printBtn        = document.getElementById("btn-print");
     const preview         = document.getElementById("preview");
     const fitWarning      = document.getElementById("fitWarning");
+    const wordCountWarning = document.getElementById("wordCountWarning");
 
     /* state: the most recently generated payload (used by export) */
     let lastGenerated = null;
@@ -459,19 +463,19 @@
       const { clinic, diagnosis, variantKey, variant } = getSelected();
       if (!clinic || !diagnosis || !variant) return;
 
-      const conciseTips = variant.tips.slice(0, 8).map(t => ({
+      const detailedTips = variant.tips.map(t => ({
         heading: sentenceLead(t.heading),
-        body: conciseBody(t.body, 56)
+        body: String(t.body).trim()
       }));
 
-      const tipsHtml = conciseTips.map((t, i) =>
+      const tipsHtml = detailedTips.map((t, i) =>
         `<li><div class="step-num">${String(i + 1).padStart(2, "0")}</div><div><span class="step-lead">${escapeHtml(t.heading)}</span><p class="step-body">${escapeHtml(t.body)}</p></div></li>`
       ).join("");
 
-      const reassurance = buildParagraphs(variant.intro, 3, 44);
+      const reassurance = buildParagraphs(variant.intro, 3);
       const subtitle = buildSubtitle(diagnosis.label, variantKey);
-      const callHtml = variant.whenToCall.slice(0, 5).map(b =>
-        `<li>${escapeHtml(conciseBody(b, 18))}</li>`
+      const callHtml = variant.whenToCall.map(b =>
+        `<li>${escapeHtml(String(b).trim())}</li>`
       ).join("");
 
       preview.innerHTML = `
@@ -510,7 +514,7 @@
             <ul>${callHtml}</ul>
           </div>
 
-          <div class="section closing"><p class="closing-note">${escapeHtml(conciseBody(variant.closing, 20))}</p></div>
+          <div class="section closing"><p class="closing-note">${escapeHtml(String(variant.closing).trim())}</p></div>
 
           <div class="footer"><span>${escapeHtml(clinic.name)}</span><span>${escapeHtml(diagnosis.label)}</span><span>REV ${new Date().toISOString().slice(0,10)}</span><span>PAGE 1 OF 1</span><span>${escapeHtml(clinic.website)}</span></div>
         </div>
@@ -522,6 +526,7 @@
 
       // Run fit check after the browser has painted.
       requestAnimationFrame(checkPageFit);
+      checkWordCount();
     }
 
     function escapeHtml(str) {
@@ -552,13 +557,13 @@
       };
       return map[variantKey] || `A simple guide for ${dxLabel}.`;
     }
-    function buildParagraphs(introArr, maxParagraphs = 3, maxWords = 44) {
+    function buildParagraphs(introArr, maxParagraphs = 3) {
       if (!Array.isArray(introArr) || !introArr.length) return ["Symptoms can improve with steady home care."];
-      return introArr.slice(0, maxParagraphs).map((p) => conciseBody(p, maxWords));
+      return introArr.slice(0, maxParagraphs).map((p) => String(p).trim());
     }
     function buildGoalParagraph(introArr, dxLabel) {
       if (!Array.isArray(introArr) || !introArr.length) return `The goal of home care is to reduce symptoms from ${dxLabel} and improve daily function with steady habits.`;
-      return `The goal of home care is to reduce flare-ups, improve comfort, and support recovery through daily steps you can repeat consistently at home.`;
+      return `The goal of home care is to give you a clear daily plan that supports safer sleep, lowers symptom flare-ups, and helps your treatment work as intended.`;
     }
     function sentenceLead(text) {
       const cleaned = String(text).trim().replace(/[.]+$/, "");
@@ -578,6 +583,18 @@
       // Allow a tiny tolerance for sub-pixel rounding.
       const overflows = preview.offsetHeight > PAGE_HEIGHT_PX + 2;
       fitWarning.hidden = !overflows;
+    }
+    function countWords(text) {
+      return String(text || "").trim().split(/\s+/).filter(Boolean).length;
+    }
+    function checkWordCount() {
+      if (!lastGenerated) { wordCountWarning.hidden = true; return; }
+      const { variant } = lastGenerated;
+      const total = countWords((variant.intro || []).join(" "))
+        + countWords((variant.tips || []).map(t => `${t.heading} ${t.body}`).join(" "))
+        + countWords((variant.whenToCall || []).join(" "))
+        + countWords(variant.closing || "");
+      wordCountWarning.hidden = total >= 700;
     }
     window.addEventListener("resize", checkPageFit);
 
@@ -669,15 +686,15 @@
         children: [new TextRun({ text: diagnosis.title, bold: true, size: SIZE_TITLE, font: FONT })]
       }));
 
-      const conciseTips = variant.tips.slice(0, 8).map(t => ({ heading: sentenceLead(t.heading), body: conciseBody(t.body, 56) }));
-      buildParagraphs(variant.intro, 3, 44).forEach((p, idx) => {
+      const detailedTips = variant.tips.map(t => ({ heading: sentenceLead(t.heading), body: String(t.body).trim() }));
+      buildParagraphs(variant.intro, 3).forEach((p, idx) => {
         children.push(sectionParagraph(idx === 0 ? "What This Means" : "", p, SIZE_BODY, FONT));
       });
       children.push(sectionParagraph("Goal of Home Care", buildGoalParagraph(variant.intro, diagnosis.label), SIZE_BODY, FONT));
 
       /* ---------- Your Self-Care Steps (numbered) ---------- */
       children.push(headingParagraph("Self-Care Instructions", SIZE_HEADING, FONT));
-      conciseTips.forEach(t => {
+      detailedTips.forEach(t => {
         children.push(new Paragraph({
           numbering: { reference: "tip-numbering", level: 0 },
           spacing: { after: 80 },
@@ -690,11 +707,11 @@
 
       /* ---------- When to Call Us (bulleted) ---------- */
       children.push(sectionHeaderParagraph("When to Call Us", "FFF8F3", "B45309", SIZE_HEADING, FONT));
-      variant.whenToCall.slice(0, 5).forEach(b => {
+      variant.whenToCall.forEach(b => {
         children.push(new Paragraph({
           bullet: { level: 0 },
           spacing: { after: 40 },
-          children: [new TextRun({ text: conciseBody(b, 16), size: SIZE_BODY, font: FONT })]
+          children: [new TextRun({ text: String(b).trim(), size: SIZE_BODY, font: FONT })]
         }));
       });
 
@@ -703,7 +720,7 @@
         alignment: AlignmentType.LEFT,
         spacing: { before: 160, after: 80 },
         border: { top:{style: BorderStyle.SINGLE,size: 3,color:"CBD5E1"} },
-        children: [new TextRun({ text: conciseBody(variant.closing, 20), italics: true, size: SIZE_BODY, font: FONT })]
+        children: [new TextRun({ text: String(variant.closing).trim(), italics: true, size: SIZE_BODY, font: FONT })]
       }));
 
       /* ---------- Footer ---------- */

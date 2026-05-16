@@ -425,51 +425,57 @@ const CONTENT = {
     variants: {
       general: {
         intro: [
-          "Sleep apnea is when your breathing stops and starts during sleep. It can make you tired during the day and affect your heart and overall health. You may snore, gasp, or wake up often without remembering why.",
-          "An oral appliance is a custom mouthpiece you wear at night. It holds your lower jaw slightly forward to keep your airway open. Used along with good habits, it can lower snoring and improve your sleep."
+          "Obstructive sleep apnea happens when the airway narrows or closes during sleep. Breathing can slow or pause, oxygen may drop, and the brain briefly wakes the body to restart breathing. Many people do not remember these awakenings, but they may still wake up tired, foggy, or with morning headaches.",
+          "Oral appliance therapy uses a custom dental device worn during sleep. The appliance gently holds your lower jaw forward to help keep the airway more open. It is a medical treatment device, not a sports mouthguard. This guide explains how to use it safely, reduce side effects, and track whether treatment is helping."
         ],
         tips: [
-          { heading: "Wear the Appliance Every Night", body: "Use your appliance every time you sleep, including naps and travel. Skipping nights lowers how well it works. Place it next to your bed where you will see it. Make it part of your bedtime routine, like brushing your teeth. Steady use brings the best results." },
-          { heading: "Clean It Each Morning", body: "Rinse the appliance with cool water after you take it out. Brush it gently with a soft toothbrush and mild soap. Skip hot water and toothpaste, which can damage it. Let it dry, then store it in its case. Clean care helps it last longer and keeps it fresh." },
-          { heading: "Sleep on Your Side", body: "Side sleeping helps keep your airway open, even with the appliance. Try a body pillow to keep you from rolling onto your back. Some people sew a tennis ball into the back of a sleep shirt as a reminder. Less back sleeping often means less snoring." },
-          { heading: "Keep a Regular Sleep Schedule", body: "Go to bed and wake up at the same time each day. Aim for seven to nine hours. Keep your room cool and dark. Steady sleep helps your whole body, and it makes the appliance work better. Weekends count too." },
-          { heading: "Limit Alcohol Before Bed", body: "Alcohol relaxes the muscles in your airway. That can make snoring and apnea worse, even with the appliance. Try to avoid drinks for three to four hours before bed. If you do drink, keep it small. Notice how you feel the next morning." },
-          { heading: "Avoid Heavy Meals at Night", body: "Large meals close to bedtime can make sleep harder. Try to eat your last big meal two to three hours before bed. If you are hungry later, choose a light snack. This helps you fall asleep and stay asleep more easily." },
-          { heading: "Cut Back on Late Caffeine", body: "Caffeine stays in your system for hours. Skip coffee, tea, and energy drinks after lunch. Even if you feel like you can still sleep, late caffeine often lowers deep sleep quality. Better sleep makes everything else work better." },
-          { heading: "Keep Your Follow-Ups", body: "Come in for your scheduled visits so we can check the fit and how your jaw feels. Small changes over time can keep the appliance working well. Tell us if you have new jaw soreness, tooth changes, or if your sleep is not improving." }
+          { heading: "Wear the appliance every night", body: "The appliance only works on the nights you wear it. Use it every time you sleep, including naps, weekends, and travel. Skipping nights can make it harder for your teeth and jaw to adjust, especially in the first month. Keep it with your toothbrush so it stays part of your nightly routine." },
+          { heading: "Insert and remove it correctly", body: "Seat the appliance gently and fully before lying down. Remove it with both hands, lifting evenly from each side. Do not force it in, bite it into place, or pry from one side, because that can crack the device or strain your jaw. Call the clinic if insertion suddenly becomes painful." },
+          { heading: "Clean it every morning", body: "After removal, rinse with cool water and brush gently with a soft brush. Use mild soap or a non-abrasive cleaner if recommended. Avoid hot water, harsh chemicals, and toothpaste, which can scratch or warp the material. Clean daily to reduce odor, protect the device, and lower bacteria buildup." },
+          { heading: "Store it dry in its case", body: "Let the appliance air-dry, then place it in its protective case. Keep the case away from pets, direct sunlight, hot cars, and heaters. Heat can change the shape and make the device fit poorly. Safe storage helps prevent cracks, loss, and accidental damage between uses." },
+          { heading: "Expect mild soreness at first", body: "Mild tooth tenderness, jaw stiffness, or extra saliva can occur during the first one to two weeks. These symptoms often improve as your mouth adapts. Severe pain, worsening bite changes, or soreness that does not settle are not expected. If symptoms interfere with wearing the device, contact the clinic." },
+          { heading: "Do your morning jaw exercises", body: "Morning exercises help your bite return to baseline after sleeping with the jaw forward. Do the exact routine your clinic provided, usually for a few minutes right after appliance removal. Consistent exercises can reduce stiffness and lower bite changes over time. Tell us if your bite feels off for hours after waking." },
+          { heading: "Sleep on your back or side", body: "Back or side sleeping usually supports airway treatment and improves comfort with the appliance. Stomach sleeping can place extra pressure on the jaw and neck, which may increase soreness. Use a supportive pillow to keep your head and neck neutral. Small position changes can improve comfort and treatment response." },
+          { heading: "Avoid alcohol close to bedtime", body: "Alcohol relaxes throat muscles and can worsen airway collapse, even when the appliance is in place. Try to avoid alcohol for several hours before bed. If you drink, keep amounts low and track how you feel the next day. Better airway tone at night improves treatment consistency." },
+          { heading: "Keep follow-up adjustment visits", body: "Oral appliance treatment is adjusted in small steps to balance airway improvement with jaw and tooth comfort. Follow-up visits let your team check fit, symptoms, and side effects early. Skipping visits can reduce benefit or delay needed changes. Bring questions and mention any new pain, fit changes, or sleep concerns." },
+          { heading: "Track snoring and daytime sleepiness", body: "Your symptoms help show whether treatment is working. Watch for snoring, witnessed breathing pauses, morning headaches, daytime sleepiness, and concentration problems. A short nightly note can reveal patterns you may miss. Share this at follow-ups so your care team can fine-tune treatment and decide whether further testing is needed." }
         ],
         whenToCall: [
-          "You have new jaw pain, tooth pain, or your bite feels off.",
-          "The appliance no longer fits or feels different than before.",
-          "Your snoring or daytime tiredness comes back or gets worse.",
-          "You have new chest pain, gasping at night, or trouble breathing.",
-          "You have questions about cleaning, storing, or replacing the appliance."
+          "Severe jaw pain that does not settle with rest.",
+          "Your bite does not return to normal in the morning.",
+          "The appliance feels loose, cracked, warped, broken, or no longer fits.",
+          "Snoring or witnessed breathing pauses continue or return.",
+          "Daytime sleepiness does not improve or gets worse.",
+          "New chest pain, gasping at night, or trouble breathing needs urgent care."
         ],
-        closing: "Steady use plus healthy sleep habits give your appliance the best chance to work. Reach out with any questions."
+        closing: "Oral appliance therapy works best when it becomes part of your nightly routine. Mild adjustment symptoms are common at first, but comfort should improve with steady use and follow-up care. Call the clinic if something changes suddenly, feels unsafe, or keeps you from using the appliance as directed."
       },
       selfCare: {
         intro: [
-          "Your appliance does its job best when paired with daily habits. The steps below focus on what you can do at home for better sleep.",
-          "Pick a few to start with. Build the rest in over time. Small, steady changes work better than one big push."
+          "Obstructive sleep apnea treatment works best when nightly device use is paired with clear home habits. Symptoms can flare when routines drift, when fit changes are missed, or when sleep and airway risks increase.",
+          "This self-care plan explains what to do, how to do it, and why each step matters. Use these instructions every day so your appliance remains comfortable, your airway stays supported, and your team gets useful symptom feedback at follow-up."
         ],
         tips: [
-          { heading: "Use It Every Night", body: "Wear your appliance every time you sleep, including naps and travel. Keep it on your nightstand so you see it. Add it to your bedtime routine. Even one night off can bring snoring back. Steady use is what makes it work." },
-          { heading: "Clean It Daily", body: "Each morning, rinse the appliance with cool water. Brush gently with a soft toothbrush and mild soap. Skip hot water and toothpaste. Let it dry, then store in its case. Clean care keeps it fresh and helps it last." },
-          { heading: "Sleep on Your Side", body: "Side sleeping keeps your airway more open. Use a body pillow to keep from rolling onto your back. Or try a sleep shirt with a small pocket on the back to remind you. Less back sleeping often means less snoring." },
-          { heading: "Set the Same Sleep Times", body: "Go to bed and wake up at the same time every day, even on weekends. Aim for seven to nine hours. Keep your room cool and dark. A steady pattern matters more than any single great night of sleep." },
-          { heading: "Skip Alcohol Before Bed", body: "Alcohol relaxes airway muscles and can bring snoring back. Try to avoid drinks for three to four hours before bed. If you do drink, keep it small. Notice how you sleep that night and how you feel the next morning." },
-          { heading: "Eat Lighter at Night", body: "Try to eat your last big meal two to three hours before bed. Save heavy, spicy, or fatty meals for earlier in the day. If you are hungry later, choose a small snack. Lighter evenings often lead to better sleep." },
-          { heading: "Cut Caffeine After Lunch", body: "Coffee, tea, and energy drinks stay in your system for hours. Skip them after lunch. Even if you feel you sleep fine, late caffeine often lowers deep sleep. Better sleep helps everything else in this plan work." },
-          { heading: "Watch How You Feel", body: "Notice your snoring, daytime sleepiness, and morning mood. Keep a simple log. Bring it to your next visit. Patterns help us fine-tune the fit and your habits. You are the best source of information about how this is going." }
+          { heading: "Wear the appliance every night", body: "Use your appliance every time you sleep, including naps and travel nights. Treatment benefit drops quickly when nights are skipped. During the first month, missed nights can also make jaw and tooth adjustment harder. Keep the device where you complete bedtime brushing so the habit stays automatic." },
+          { heading: "Insert and remove it gently", body: "Place the appliance with even pressure on both sides and confirm it is fully seated before sleep. Remove it using both hands instead of pulling from one side. Do not bite it into place or force a tight fit. If insertion or removal suddenly hurts, contact the clinic." },
+          { heading: "Clean it each morning", body: "Rinse with cool water after removal and brush gently with a soft brush. Use mild soap or the cleanser your clinic recommends. Avoid hot water, bleach, and abrasive toothpaste because they can damage fit surfaces. Daily cleaning lowers odor, reduces bacteria buildup, and helps preserve treatment comfort." },
+          { heading: "Store it dry and protected", body: "Air-dry the appliance, then store it in its hard case. Keep it away from pets, direct sun, and heat sources such as dashboards or radiators. Heat can warp the material and change fit. Protected storage lowers the risk of cracks, contamination, and accidental loss between nights." },
+          { heading: "Expect mild early adjustment symptoms", body: "In the first one to two weeks, mild tooth pressure, extra saliva, or jaw stiffness can occur as your mouth adjusts. These should improve with consistent use. Severe pain, locking, or worsening bite changes are not expected. Call if discomfort keeps you from wearing the appliance." },
+          { heading: "Complete morning jaw reset exercises", body: "Do the morning exercise routine provided by your clinic right after appliance removal. These movements help your bite return toward baseline and reduce stiffness after nighttime jaw advancement. Consistency matters more than intensity. If your teeth do not come together normally by later morning, report that at once." },
+          { heading: "Use supportive sleep position habits", body: "Back or side sleeping usually improves comfort and supports airway treatment. Stomach sleeping can increase jaw and neck strain and make the device feel less tolerable. Use a supportive pillow to keep your neck neutral. Position habits often improve both comfort and snoring control over time." },
+          { heading: "Avoid alcohol near bedtime", body: "Alcohol relaxes throat muscles and can worsen airway collapse even when the appliance is worn. Try to avoid alcohol for several hours before sleep. If you do drink, keep the amount low and note next-day fatigue or snoring changes. Reducing evening alcohol improves treatment consistency for many patients." },
+          { heading: "Keep all adjustment follow-ups", body: "Oral appliance therapy is usually advanced in small, careful steps. Follow-up visits let your team balance airway response with jaw comfort and tooth safety. Skipping visits may delay needed fit changes and reduce benefit. Bring your questions and mention any bite shift, soreness, or fit change." },
+          { heading: "Track symptoms and daytime function", body: "Write short notes on snoring, witnessed pauses, morning headache, daytime sleepiness, and concentration. These details help your team decide whether the appliance is working as intended or needs further adjustment. Symptom tracking is part of treatment, not extra paperwork, and it improves decision-making at each visit." }
         ],
         whenToCall: [
-          "You have new jaw pain, tooth pain, or your bite feels off.",
-          "The appliance no longer fits or feels different than before.",
-          "Your snoring or daytime tiredness comes back or gets worse.",
-          "You have new chest pain, gasping at night, or trouble breathing.",
-          "You have questions about cleaning, storing, or replacing the appliance."
+          "Severe jaw pain, tooth pain, or bite change that does not settle.",
+          "Your bite does not return to normal by morning.",
+          "The appliance feels loose, cracked, warped, broken, or no longer fits.",
+          "Snoring, witnessed pauses, or daytime sleepiness continue or return.",
+          "Questions about cleaning, wear schedule, or follow-up adjustments.",
+          "New chest pain, gasping at night, or trouble breathing needs urgent care."
         ],
-        closing: "Daily habits give your appliance its best chance to work. Stick with them and reach out with any questions."
+        closing: "Your appliance is most effective when home care is steady and specific. Most people improve over weeks, not overnight, and small daily actions protect long-term results. If symptoms persist, fit changes appear, or comfort declines, call early so the care plan can be adjusted before progress is lost."
       },
       firstAppointment: {
         intro: [
