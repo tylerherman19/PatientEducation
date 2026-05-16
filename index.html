@@ -12,8 +12,8 @@
       --border-soft: #e5e7eb;
       --text: #111827;
       --muted: #4b5563;
-      --accent: #1d4ed8;
-      --accent-hover: #1e40af;
+      --accent: #0f766e;
+      --accent-hover: #115e59;
       --warn-bg: #fef3c7;
       --warn-border: #f59e0b;
       --warn-text: #92400e;
@@ -21,7 +21,7 @@
               "Helvetica Neue", Arial, sans-serif;
       --page-w: 8.5in;
       --page-h: 11in;
-      --page-margin: 0.85in;
+      --page-margin: 0.55in;
     }
 
     * { box-sizing: border-box; }
@@ -148,8 +148,8 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.05);
       padding: var(--page-margin);
       color: #111;
-      font-size: 10.5pt;
-      line-height: 1.45;
+      font-size: 10pt;
+      line-height: 1.35;
     }
 
     .placeholder {
@@ -163,88 +163,114 @@
     }
 
     /* ---------- Handout content styles ---------- */
+    .handout {
+      min-height: calc(var(--page-h) - 2 * var(--page-margin));
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
     .letterhead {
       display: flex;
-      gap: 16px;
+      gap: 10px;
       align-items: center;
-      margin-bottom: 6px;
+      margin-bottom: 2px;
     }
     .letterhead img {
-      max-height: 0.7in;
-      max-width: 2.5in;
+      max-height: 0.45in;
+      max-width: 1.65in;
       object-fit: contain;
     }
     .letterhead-info {
-      font-size: 9.5pt;
-      line-height: 1.35;
+      font-size: 8.7pt;
+      line-height: 1.2;
       color: #111;
     }
     .letterhead-info .clinic-name {
       font-weight: 700;
-      font-size: 11pt;
+      font-size: 9.7pt;
       margin-bottom: 2px;
     }
-    .handout-rule {
-      border: none;
-      border-top: 1px solid #9ca3af;
-      margin: 8px 0 12px;
+    .letterhead-meta {
+      color: #334155;
+      font-size: 8.2pt;
+      margin-top: 1px;
+    }
+    .title-block {
+      background: #f0f9ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 8px 10px;
     }
     .handout-title {
-      text-align: center;
-      font-size: 13pt;
+      margin: 0 0 2px;
+      font-size: 15pt;
       font-weight: 700;
-      margin: 4px 0 10px;
+      color: #0f172a;
+    }
+    .title-sub {
+      margin: 0;
+      font-size: 9.6pt;
+      color: #334155;
     }
     .handout h3 {
-      font-size: 11pt;
+      font-size: 11.2pt;
       font-weight: 700;
-      margin: 10px 0 4px;
+      margin: 0 0 3px;
+      color: #134e4a;
     }
     .handout p {
-      margin: 0 0 8px;
+      margin: 0 0 6px;
     }
-    .handout .section {
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
-      padding: 8px 10px;
-      margin-bottom: 8px;
+    .section {
+      border-radius: 10px;
+      padding: 7px 9px;
+      border: 1px solid #dbeafe;
+      background: #f8fafc;
     }
-    .handout .intro-list {
-      margin: 4px 0 0 1.1em;
+    .section.info { background: #f0f9ff; border-color: #bae6fd; }
+    .section.start { background: #ecfeff; border-color: #99f6e4; }
+    .section.avoid { background: #f8fafc; border-color: #e2e8f0; }
+    .section.call { background: #fff7ed; border-color: #fdba74; }
+    .section.closing { background: #f0fdfa; border-color: #99f6e4; text-align: center; }
+    .mini-list, .section ul {
+      margin: 2px 0 0 1.05em;
       padding: 0;
     }
-    .handout .intro-list li {
-      margin-bottom: 4px;
+    .section li { margin-bottom: 3px; }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
     }
-    .handout ol {
-      margin: 4px 0 6px 1.1em;
-      padding: 0;
+    .tip-card {
+      break-inside: avoid;
+      page-break-inside: avoid;
+      border: 1px solid #dbeafe;
+      border-radius: 9px;
+      background: #ffffff;
+      padding: 6px 7px;
+      min-height: 62px;
     }
-    .handout ol li {
-      margin-bottom: 5px;
+    .tip-row { display: flex; gap: 6px; }
+    .tip-num {
+      width: 18px; height: 18px; border-radius: 999px;
+      background: #0f766e; color: #fff; font-size: 8.7pt; font-weight: 700;
+      display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+      margin-top: 1px;
     }
-    .handout ol li strong {
-      display: inline;
-    }
-    .handout ul {
-      margin: 4px 0 6px 1.1em;
-      padding: 0;
-    }
-    .handout ul li {
-      margin-bottom: 3px;
-    }
-    .handout .closing {
-      text-align: center;
-      margin: 10px 0 6px;
-      font-style: italic;
+    .tip-card h4 { margin: 0 0 2px; font-size: 9.8pt; color: #0f172a; }
+    .tip-card p { margin: 0; font-size: 9.2pt; color: #1f2937; line-height: 1.28; }
+    .content-row {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 8px;
     }
     .handout .footer {
-      margin-top: 8px;
-      padding-top: 6px;
+      margin-top: auto;
+      padding-top: 4px;
       border-top: 1px solid #d1d5db;
       text-align: center;
-      font-size: 9pt;
+      font-size: 8.3pt;
       color: #4b5563;
     }
 
@@ -260,7 +286,7 @@
 
     /* ---------- Print ---------- */
     @media print {
-      :root { --page-margin: 0.85in; }
+      :root { --page-margin: 0.45in; }
       body { background: #fff; }
       .controls, .fit-warning, .preview-area > .fit-warning,
       button, .note { display: none !important; }
@@ -283,9 +309,10 @@
         margin: 0;
         transform: none !important;
       }
+      .cards-grid, .content-row, .section { break-inside: avoid; page-break-inside: avoid; }
       @page {
         size: letter;
-        margin: 0.85in;
+        margin: 0.45in;
       }
     }
   </style>
@@ -329,7 +356,7 @@
 
     <section class="preview-area">
       <div id="fitWarning" class="fit-warning" hidden>
-        Warning: This handout may not fit on one page.
+        Warning: This handout may not fit on one printed page. Shorten the content or use the compact layout.
       </div>
       <article id="preview" class="preview" aria-live="polite">
         <div class="placeholder">
@@ -413,16 +440,22 @@
       const { clinic, diagnosis, variantKey, variant } = getSelected();
       if (!clinic || !diagnosis || !variant) return;
 
-      const tipsHtml = variant.tips.map(t =>
-        `<li><strong>${escapeHtml(t.heading)}.</strong> ${escapeHtml(t.body)}</li>`
+      const conciseTips = variant.tips.slice(0, 8).map(t => ({
+        heading: shorten(t.heading, 34),
+        body: conciseBody(t.body)
+      }));
+
+      const tipsHtml = conciseTips.map((t, i) =>
+        `<article class="tip-card"><div class="tip-row"><span class="tip-num">${i + 1}</span><div><h4>${escapeHtml(t.heading)}</h4><p>${escapeHtml(t.body)}</p></div></div></article>`
       ).join("");
 
-      const introHtml = variant.intro.map(p =>
-        `<li>${escapeHtml(p)}</li>`
-      ).join("");
+      const reassurance = buildReassurance(variant.intro, diagnosis.label);
+      const subtitle = buildSubtitle(diagnosis.label, variantKey);
+      const startHere = conciseTips.slice(0, 3).map((t, i) => `<li><strong>${i + 1}.</strong> ${escapeHtml(t.heading)}</li>`).join("");
+      const avoidHtml = conciseTips.slice(3, 8).map(t => `<li>${escapeHtml(t.heading)}</li>`).join("");
 
-      const callHtml = variant.whenToCall.map(b =>
-        `<li>${escapeHtml(b)}</li>`
+      const callHtml = variant.whenToCall.slice(0, 5).map(b =>
+        `<li>${escapeHtml(conciseBody(b, 16))}</li>`
       ).join("");
 
       preview.innerHTML = `
@@ -438,25 +471,37 @@
               ${Array.isArray(clinic.hours) && clinic.hours.length ? `<div><strong>Hours:</strong> ${clinic.hours.map(escapeHtml).join(" | ")}</div>` : ""}
             </div>
           </header>
-          <hr class="handout-rule">
-          <h2 class="handout-title">${escapeHtml(diagnosis.title)}</h2>
-
-          <div class="section">
-            <h3>What You Should Know</h3>
-            <ul class="intro-list">${introHtml}</ul>
+          <div class="title-block">
+            <h2 class="handout-title">${escapeHtml(diagnosis.title)}</h2>
+            <p class="title-sub">${escapeHtml(subtitle)}</p>
           </div>
 
-          <div class="section">
-            <h3>Quick Self-Care Steps</h3>
-            <ol>${tipsHtml}</ol>
+          <div class="section info">
+            <h3>Good to Know</h3>
+            <p>${escapeHtml(reassurance)}</p>
           </div>
 
-          <div class="section">
+          <div class="section start">
+            <h3>Start Here Today</h3>
+            <ul class="mini-list">${startHere}</ul>
+          </div>
+
+          <h3>Self-Care Action Steps</h3>
+          <div class="cards-grid">${tipsHtml}</div>
+
+          <div class="content-row">
+          <div class="section avoid">
+            <h3>Try to Limit</h3>
+            <ul>${avoidHtml}</ul>
+          </div>
+
+          <div class="section call">
             <h3>When to Call Us</h3>
             <ul>${callHtml}</ul>
           </div>
+          </div>
 
-          <p class="closing">${escapeHtml(variant.closing)}</p>
+          <div class="section closing">${escapeHtml(conciseBody(variant.closing, 20))}</div>
 
           <div class="footer">${escapeHtml(clinic.website)}</div>
         </div>
@@ -477,6 +522,30 @@
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#39;");
+    }
+
+    function conciseBody(text, maxWords = 24) {
+      const cleaned = String(text).replace(/\s+/g, " ").trim();
+      const firstSentence = cleaned.split(/(?<=[.!?])\s+/)[0] || cleaned;
+      const words = firstSentence.split(" ");
+      return words.length > maxWords ? words.slice(0, maxWords).join(" ") + "..." : firstSentence;
+    }
+    function shorten(text, maxLen) {
+      const t = String(text).trim();
+      return t.length > maxLen ? t.slice(0, maxLen - 1) + "…" : t;
+    }
+    function buildReassurance(introArr, dxLabel) {
+      const source = (introArr && introArr.length ? introArr.join(" ") : `${dxLabel} symptoms can improve with daily care.`);
+      return conciseBody(source, 42);
+    }
+    function buildSubtitle(dxLabel, variantKey) {
+      const map = {
+        general: "Simple steps can help you feel better and stay in control.",
+        selfCare: "Daily habits that can lower symptoms and support healing.",
+        firstAppointment: "Here is what to focus on after today’s visit.",
+        homeCare: "A clear at-home plan you can start today."
+      };
+      return map[variantKey] || `A simple guide for ${dxLabel}.`;
     }
 
     /* --------------------- Page-fit warning ---------------------------- */
@@ -578,18 +647,13 @@
         children: [new TextRun({ text: diagnosis.title, bold: true, size: SIZE_TITLE, font: FONT })]
       }));
 
-      /* ---------- What You Should Know ---------- */
-      children.push(headingParagraph("What You Should Know", SIZE_HEADING, FONT));
-      variant.intro.forEach(p => {
-        children.push(new Paragraph({
-          spacing: { after: 100 },
-          children: [new TextRun({ text: p, size: SIZE_BODY, font: FONT })]
-        }));
-      });
+      const conciseTips = variant.tips.slice(0, 8).map(t => ({ heading: shorten(t.heading, 34), body: conciseBody(t.body) }));
+      children.push(sectionBox("Good to Know", buildReassurance(variant.intro, diagnosis.label), "EAF6FF", "BBD8F2", SIZE_BODY, FONT));
+      children.push(sectionBox("Start Here Today", conciseTips.slice(0, 3).map((t, i) => `${i + 1}. ${t.heading}`).join("  •  "), "ECFEFF", "99F6E4", SIZE_BODY, FONT));
 
       /* ---------- Your Self-Care Steps (numbered) ---------- */
-      children.push(headingParagraph("Your Self-Care Steps", SIZE_HEADING, FONT));
-      variant.tips.forEach(t => {
+      children.push(headingParagraph("Self-Care Action Steps", SIZE_HEADING, FONT));
+      conciseTips.forEach(t => {
         children.push(new Paragraph({
           numbering: { reference: "tip-numbering", level: 0 },
           spacing: { after: 80 },
@@ -601,12 +665,12 @@
       });
 
       /* ---------- When to Call Us (bulleted) ---------- */
-      children.push(headingParagraph("When to Call Us", SIZE_HEADING, FONT));
-      variant.whenToCall.forEach(b => {
+      children.push(sectionHeaderParagraph("When to Call Us", "FFF4E5", "FDBA74", SIZE_HEADING, FONT));
+      variant.whenToCall.slice(0, 5).forEach(b => {
         children.push(new Paragraph({
           bullet: { level: 0 },
           spacing: { after: 40 },
-          children: [new TextRun({ text: b, size: SIZE_BODY, font: FONT })]
+          children: [new TextRun({ text: conciseBody(b, 16), size: SIZE_BODY, font: FONT })]
         }));
       });
 
@@ -614,7 +678,9 @@
       children.push(new Paragraph({
         alignment: AlignmentType.CENTER,
         spacing: { before: 160, after: 80 },
-        children: [new TextRun({ text: variant.closing, italics: true, size: SIZE_BODY, font: FONT })]
+        shading: { fill: "F0FDFA" },
+        border: { top:{style: BorderStyle.SINGLE,size: 3,color:"99F6E4"}, bottom:{style: BorderStyle.SINGLE,size: 3,color:"99F6E4"}, left:{style: BorderStyle.SINGLE,size:3,color:"99F6E4"}, right:{style: BorderStyle.SINGLE,size:3,color:"99F6E4"}},
+        children: [new TextRun({ text: conciseBody(variant.closing, 20), italics: true, size: SIZE_BODY, font: FONT })]
       }));
 
       /* ---------- Footer ---------- */
@@ -679,6 +745,22 @@
     function headingParagraph(text, size, font) {
       return new docx.Paragraph({
         spacing: { before: 160, after: 80 },
+        children: [new docx.TextRun({ text, bold: true, size, font })]
+      });
+    }
+    function sectionBox(title, body, fill, borderColor, size, font) {
+      return new docx.Paragraph({
+        spacing: { before: 80, after: 80 },
+        shading: { fill },
+        border: { top:{style: docx.BorderStyle.SINGLE,size:3,color:borderColor}, bottom:{style: docx.BorderStyle.SINGLE,size:3,color:borderColor}, left:{style: docx.BorderStyle.SINGLE,size:3,color:borderColor}, right:{style: docx.BorderStyle.SINGLE,size:3,color:borderColor}},
+        children: [new docx.TextRun({ text: `${title}: `, bold: true, size, font }), new docx.TextRun({ text: body, size, font })]
+      });
+    }
+    function sectionHeaderParagraph(text, fill, borderColor, size, font) {
+      return new docx.Paragraph({
+        spacing: { before: 120, after: 80 },
+        shading: { fill },
+        border: { top:{style: docx.BorderStyle.SINGLE,size:3,color:borderColor}, bottom:{style: docx.BorderStyle.SINGLE,size:3,color:borderColor}, left:{style: docx.BorderStyle.SINGLE,size:3,color:borderColor}, right:{style: docx.BorderStyle.SINGLE,size:3,color:borderColor}},
         children: [new docx.TextRun({ text, bold: true, size, font })]
       });
     }
