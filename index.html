@@ -167,7 +167,7 @@
       min-height: calc(var(--page-h) - 2 * var(--page-margin));
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 6px;
     }
     .letterhead {
       display: flex;
@@ -196,9 +196,9 @@
       margin-top: 1px;
     }
     .title-block {
-      border-top: 2px solid var(--accent);
-      border-bottom: 1px solid #cbd5e1;
-      padding: 7px 0 6px;
+      border-top: 1px solid #b7c4d3;
+      border-bottom: 1px solid #d1d9e2;
+      padding: 6px 0 6px;
     }
     .handout-title {
       margin: 0 0 3px;
@@ -212,57 +212,36 @@
       color: #475569;
     }
     .handout h3 {
-      font-size: 10.8pt;
+      font-size: 10.4pt;
       font-weight: 700;
-      margin: 0 0 3px;
+      margin: 0 0 2px;
       color: #0b1f33;
     }
     .handout p {
       margin: 0 0 6px;
     }
-    .section {
-      border-radius: 3px;
+    .section { padding: 0; border: none; background: transparent; }
+    .section.call {
+      background: #fcf7f2;
+      border: 1px solid #d7c4ad;
       padding: 6px 8px;
-      border: 1px solid #d9e1ea;
-      background: #f8fafc;
     }
-    .section.info { background: #f8fafc; border-color: #d6dee8; }
-    .section.start { background: #f7fbff; border-color: #c6d7ea; border-left: 3px solid var(--accent); }
-    .section.avoid { background: transparent; border: none; padding: 0; }
-    .section.call { background: var(--warn-bg); border: 1px solid var(--warn-border); }
-    .section.closing { background: transparent; border: none; text-align: left; padding: 0; }
+    .section.closing { text-align: left; }
     .mini-list, .section ul {
       margin: 2px 0 0 1.05em;
       padding: 0;
     }
     .section li { margin-bottom: 3px; }
     .steps-list {
-      border-top: 2px solid #cbd5e1;
-      border-bottom: 1px solid #d8dee6;
-      margin-top: -1px;
+      margin: 0;
+      padding-left: 1.1em;
     }
-    .tip-card {
-      break-inside: avoid;
-      page-break-inside: avoid;
-      border-top: 1px solid #e2e8f0;
-      background: #ffffff;
-      padding: 5px 2px;
-      min-height: 0;
+    .steps-list li {
+      margin: 0 0 5px;
+      padding-left: 2px;
     }
-    .tip-row { display: flex; gap: 6px; }
-    .tip-num {
-      width: 18px; height: 18px; border-radius: 2px;
-      background: var(--accent); color: #fff; font-size: 8.3pt; font-weight: 700;
-      display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
-      margin-top: 1px;
-    }
-    .tip-card h4 { margin: 0 0 1px; font-size: 9.5pt; color: #0f172a; }
-    .tip-card p { margin: 0; font-size: 9.2pt; color: #1f2937; line-height: 1.28; }
-    .content-row {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 8px;
-    }
+    .step-lead { font-weight: 700; }
+    .content-row { display: block; }
     .handout .footer {
       margin-top: auto;
       padding-top: 6px;
@@ -309,7 +288,7 @@
         margin: 0;
         transform: none !important;
       }
-      .steps-list, .tip-card, .content-row, .section { break-inside: avoid; page-break-inside: avoid; }
+      .steps-list, .content-row, .section { break-inside: avoid; page-break-inside: avoid; }
       @page {
         size: letter;
         margin: 0.45in;
@@ -441,18 +420,18 @@
       if (!clinic || !diagnosis || !variant) return;
 
       const conciseTips = variant.tips.slice(0, 8).map(t => ({
-        heading: shorten(t.heading, 34),
-        body: conciseBody(t.body)
+        heading: sentenceLead(t.heading),
+        body: conciseBody(t.body, 56)
       }));
 
       const tipsHtml = conciseTips.map((t, i) =>
-        `<article class="tip-card"><div class="tip-row"><span class="tip-num">${i + 1}</span><div><h4>${escapeHtml(t.heading)}</h4><p>${escapeHtml(t.body)}</p></div></div></article>`
+        `<li><span class="step-lead">${escapeHtml(t.heading)}</span> ${escapeHtml(t.body)}</li>`
       ).join("");
 
       const reassurance = buildReassurance(variant.intro, diagnosis.label);
       const subtitle = buildSubtitle(diagnosis.label, variantKey);
-      const startHere = conciseTips.slice(0, 3).map((t, i) => `<li><strong>${i + 1}.</strong> ${escapeHtml(t.heading)}</li>`).join("");
-      const avoidHtml = conciseTips.slice(3, 8).map(t => `<li>${escapeHtml(t.heading)}</li>`).join("");
+      const keyInstructions = buildKeyInstructions(conciseTips);
+      const avoidHtml = conciseTips.slice(3, 6).map(t => `<li>${escapeHtml(t.body)}</li>`).join("");
 
       const callHtml = variant.whenToCall.slice(0, 5).map(b =>
         `<li>${escapeHtml(conciseBody(b, 16))}</li>`
@@ -481,13 +460,13 @@
             <p class="overview-copy">${escapeHtml(reassurance)}</p>
           </div>
 
-          <div class="section start">
-            <h3>Key First Steps</h3>
-            <ul class="mini-list">${startHere}</ul>
+          <div class="section">
+            <h3>Key Instructions</h3>
+            <p>${escapeHtml(keyInstructions)}</p>
           </div>
 
           <h3>Self-Care Instructions</h3>
-          <div class="steps-list">${tipsHtml}</div>
+          <ol class="steps-list">${tipsHtml}</ol>
 
           <div class="content-row">
           <div class="section avoid">
@@ -530,22 +509,27 @@
       const words = firstSentence.split(" ");
       return words.length > maxWords ? words.slice(0, maxWords).join(" ") + "..." : firstSentence;
     }
-    function shorten(text, maxLen) {
-      const t = String(text).trim();
-      return t.length > maxLen ? t.slice(0, maxLen - 1) + "…" : t;
-    }
     function buildReassurance(introArr, dxLabel) {
       const source = (introArr && introArr.length ? introArr.join(" ") : `${dxLabel} symptoms can improve with daily care.`);
       return conciseBody(source, 42);
     }
     function buildSubtitle(dxLabel, variantKey) {
       const map = {
-        general: "Standard guidance for home management and symptom control.",
-        selfCare: "Practical daily instructions to support recovery at home.",
-        firstAppointment: "Priorities to follow after your clinic visit today.",
-        homeCare: "Structured home-care plan for the next 1 to 2 weeks."
+        general: "Home care steps to lower strain and manage symptoms.",
+        selfCare: "Daily home care guidance for the next few weeks.",
+        firstAppointment: "Follow-up home instructions after today’s visit.",
+        homeCare: "Focused home-care plan to support recovery."
       };
       return map[variantKey] || `A simple guide for ${dxLabel}.`;
+    }
+    function sentenceLead(text) {
+      const cleaned = String(text).trim().replace(/[.]+$/, "");
+      return cleaned.charAt(0).toUpperCase() + cleaned.slice(1).toLowerCase() + ".";
+    }
+    function buildKeyInstructions(tips) {
+      const leads = tips.slice(0, 3).map(t => t.heading.replace(/[.]+$/, "").toLowerCase());
+      if (!leads.length) return "Focus on steady daily care to protect the area while symptoms improve.";
+      return `For the next few weeks, focus on ${leads.join(", and ")}. These steps work best when you repeat them every day.`;
     }
 
     /* --------------------- Page-fit warning ---------------------------- */
@@ -647,9 +631,9 @@
         children: [new TextRun({ text: diagnosis.title, bold: true, size: SIZE_TITLE, font: FONT })]
       }));
 
-      const conciseTips = variant.tips.slice(0, 8).map(t => ({ heading: shorten(t.heading, 34), body: conciseBody(t.body) }));
-      children.push(sectionBox("Overview", buildReassurance(variant.intro, diagnosis.label), "F8FAFC", "D6DEE8", SIZE_BODY, FONT));
-      children.push(sectionBox("Key First Steps", conciseTips.slice(0, 3).map((t, i) => `${i + 1}. ${t.heading}`).join("  •  "), "F7FBFF", "C6D7EA", SIZE_BODY, FONT));
+      const conciseTips = variant.tips.slice(0, 8).map(t => ({ heading: sentenceLead(t.heading), body: conciseBody(t.body, 56) }));
+      children.push(sectionParagraph("Overview", buildReassurance(variant.intro, diagnosis.label), SIZE_BODY, FONT));
+      children.push(sectionParagraph("Key Instructions", buildKeyInstructions(conciseTips), SIZE_BODY, FONT));
 
       /* ---------- Your Self-Care Steps (numbered) ---------- */
       children.push(headingParagraph("Self-Care Instructions", SIZE_HEADING, FONT));
@@ -658,9 +642,18 @@
           numbering: { reference: "tip-numbering", level: 0 },
           spacing: { after: 80 },
           children: [
-            new TextRun({ text: t.heading + ". ", bold: true, size: SIZE_BODY, font: FONT }),
+            new TextRun({ text: t.heading + " ", bold: true, size: SIZE_BODY, font: FONT }),
             new TextRun({ text: t.body, size: SIZE_BODY, font: FONT })
           ]
+        }));
+      });
+
+      children.push(headingParagraph("Avoid or Limit", SIZE_HEADING, FONT));
+      conciseTips.slice(3, 6).forEach(t => {
+        children.push(new Paragraph({
+          bullet: { level: 0 },
+          spacing: { after: 50 },
+          children: [new TextRun({ text: t.body, size: SIZE_BODY, font: FONT })]
         }));
       });
 
@@ -747,11 +740,9 @@
         children: [new docx.TextRun({ text, bold: true, size, font })]
       });
     }
-    function sectionBox(title, body, fill, borderColor, size, font) {
+    function sectionParagraph(title, body, size, font) {
       return new docx.Paragraph({
         spacing: { before: 80, after: 80 },
-        shading: { fill },
-        border: { top:{style: docx.BorderStyle.SINGLE,size:3,color:borderColor}, bottom:{style: docx.BorderStyle.SINGLE,size:3,color:borderColor}, left:{style: docx.BorderStyle.SINGLE,size:3,color:borderColor}, right:{style: docx.BorderStyle.SINGLE,size:3,color:borderColor}},
         children: [new docx.TextRun({ text: `${title}: `, bold: true, size, font }), new docx.TextRun({ text: body, size, font })]
       });
     }
