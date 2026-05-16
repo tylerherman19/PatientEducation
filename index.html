@@ -201,7 +201,21 @@
       margin: 10px 0 4px;
     }
     .handout p {
-      margin: 0 0 6px;
+      margin: 0 0 8px;
+    }
+    .handout .section {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin-bottom: 8px;
+    }
+    .handout .intro-list {
+      margin: 4px 0 0 1.1em;
+      padding: 0;
+    }
+    .handout .intro-list li {
+      margin-bottom: 4px;
     }
     .handout ol {
       margin: 4px 0 6px 1.1em;
@@ -404,7 +418,7 @@
       ).join("");
 
       const introHtml = variant.intro.map(p =>
-        `<p>${escapeHtml(p)}</p>`
+        `<li>${escapeHtml(p)}</li>`
       ).join("");
 
       const callHtml = variant.whenToCall.map(b =>
@@ -419,20 +433,27 @@
               <div class="clinic-name">${escapeHtml(clinic.name)}</div>
               <div>${escapeHtml(clinic.address)}</div>
               <div>${escapeHtml(clinic.cityStateZip)}</div>
-              <div>${escapeHtml(clinic.phone)} &middot; ${escapeHtml(clinic.website)}</div>
+              <div>${escapeHtml(clinic.phone)}${clinic.fax ? ` &middot; Fax: ${escapeHtml(clinic.fax)}` : ""}</div>
+              <div>${escapeHtml(clinic.website)}</div>
             </div>
           </header>
           <hr class="handout-rule">
           <h2 class="handout-title">${escapeHtml(diagnosis.title)}</h2>
 
-          <h3>What You Should Know</h3>
-          ${introHtml}
+          <div class="section">
+            <h3>What You Should Know</h3>
+            <ul class="intro-list">${introHtml}</ul>
+          </div>
 
-          <h3>Your Self-Care Steps</h3>
-          <ol>${tipsHtml}</ol>
+          <div class="section">
+            <h3>Quick Self-Care Steps</h3>
+            <ol>${tipsHtml}</ol>
+          </div>
 
-          <h3>When to Call Us</h3>
-          <ul>${callHtml}</ul>
+          <div class="section">
+            <h3>When to Call Us</h3>
+            <ul>${callHtml}</ul>
+          </div>
 
           <p class="closing">${escapeHtml(variant.closing)}</p>
 
