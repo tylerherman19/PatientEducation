@@ -6,7 +6,7 @@
   <title>Patient Education Generator</title>
   <style>
     :root {
-      --bg: #eef2f6;
+      --bg: #e9ecef;
       --panel-bg: #ffffff;
       --border: #d1d5db;
       --border-soft: #e5e7eb;
@@ -14,6 +14,15 @@
       --muted: #4b5563;
       --accent: #1f4e79;
       --accent-hover: #173a5b;
+      --paper: #ffffff;
+      --primary-text: #1A1D24;
+      --secondary-text: #3A3F49;
+      --rule: #D8D4CC;
+      --callout-bg: #F3EAD7;
+      --callout-rule: #C8A972;
+      --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+      --sans: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+      --mono: "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
       --warn-bg: #fff8f3;
       --warn-border: #b45309;
       --warn-text: #7c2d12;
@@ -21,7 +30,7 @@
               "Helvetica Neue", Arial, sans-serif;
       --page-w: 8.5in;
       --page-h: 11in;
-      --page-margin: 0.55in;
+      --page-margin: 0.65in;
     }
 
     * { box-sizing: border-box; }
@@ -143,13 +152,13 @@
     .preview {
       width: var(--page-w);
       min-height: var(--page-h);
-      background: #ffffff;
+      background: var(--paper);
       border: 1px solid var(--border-soft);
       box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.05);
       padding: var(--page-margin);
       color: #111;
-      font-size: 10pt;
-      line-height: 1.35;
+      font-size: 11pt;
+      line-height: 1.42;
     }
 
     .placeholder {
@@ -167,64 +176,76 @@
       min-height: calc(var(--page-h) - 2 * var(--page-margin));
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
+      color: var(--primary-text);
+      font-family: var(--serif);
     }
     .letterhead {
       display: flex;
-      gap: 10px;
-      align-items: center;
+      gap: 12px;
+      align-items: flex-start;
       margin-bottom: 0;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 7px;
     }
     .letterhead img {
-      max-height: 0.4in;
+      max-height: 0.46in;
       max-width: 1.65in;
       object-fit: contain;
     }
     .letterhead-info {
-      font-size: 8.3pt;
-      line-height: 1.2;
-      color: #111;
+      font-size: 8.4pt;
+      line-height: 1.25;
+      color: var(--secondary-text);
+      font-family: var(--sans);
     }
     .letterhead-info .clinic-name {
       font-weight: 700;
-      font-size: 9.2pt;
+      font-size: 9pt;
       margin-bottom: 2px;
     }
-    .letterhead-meta {
-      color: #475569;
-      font-size: 8.2pt;
+    .letterhead-meta, .series-label {
+      color: var(--secondary-text);
+      font-size: 8.1pt;
       margin-top: 1px;
+      font-family: var(--mono);
+      letter-spacing: 0.04em;
     }
     .title-block {
-      border-top: 1px solid #b7c4d3;
-      border-bottom: 1px solid #d1d9e2;
-      padding: 6px 0 6px;
+      padding: 4px 0 2px;
     }
     .handout-title {
       margin: 0 0 3px;
-      font-size: 14pt;
-      font-weight: 700;
-      color: #0b1f33;
+      font-size: 20pt;
+      font-weight: 600;
+      color: var(--primary-text);
+      line-height: 1.15;
     }
     .title-sub {
       margin: 0;
-      font-size: 9pt;
-      color: #475569;
+      font-size: 12.4pt;
+      color: var(--secondary-text);
+      font-style: italic;
     }
-    .handout h3 {
-      font-size: 10.4pt;
-      font-weight: 700;
-      margin: 0 0 2px;
-      color: #0b1f33;
+    .handout h3, .section-label {
+      font-size: 11.2pt;
+      font-weight: 600;
+      margin: 2px 0 3px;
+      color: var(--primary-text);
+      font-family: var(--sans);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
     }
     .handout p {
       margin: 0 0 6px;
     }
     .section { padding: 0; border: none; background: transparent; }
     .section.call {
-      background: #fcf7f2;
-      border: 1px solid #d7c4ad;
-      padding: 6px 8px;
+      background: var(--callout-bg);
+      border-left: 3px solid var(--callout-rule);
+      padding: 7px 10px;
+      break-inside: avoid;
+      page-break-inside: avoid;
     }
     .section.closing { text-align: left; }
     .mini-list, .section ul {
@@ -234,21 +255,40 @@
     .section li { margin-bottom: 3px; }
     .steps-list {
       margin: 0;
-      padding-left: 1.1em;
+      padding-left: 0;
+      list-style: none;
+      column-count: 2;
+      column-gap: 0.28in;
     }
     .steps-list li {
-      margin: 0 0 5px;
-      padding-left: 2px;
+      margin: 0 0 8px;
+      padding-left: 0;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      display: grid;
+      grid-template-columns: 0.33in 1fr;
+      gap: 6px;
     }
-    .step-lead { font-weight: 700; }
+    .step-num {
+      font-family: var(--mono);
+      font-size: 9pt;
+      color: var(--secondary-text);
+      padding-top: 1px;
+      letter-spacing: 0.03em;
+    }
+    .step-lead { font-weight: 700; font-size: 11pt; }
+    .step-body { margin: 0; }
     .content-row { display: block; }
     .handout .footer {
       margin-top: auto;
-      padding-top: 6px;
-      border-top: 1px solid #d1d5db;
-      text-align: center;
-      font-size: 8.3pt;
-      color: #4b5563;
+      padding-top: 7px;
+      border-top: 1px solid var(--rule);
+      font-size: 8.6pt;
+      color: var(--secondary-text);
+      font-family: var(--mono);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
     }
     .overview-copy { margin-bottom: 3px; }
     .closing-note { font-size: 9pt; color: #334155; margin-top: 2px; }
@@ -265,7 +305,7 @@
 
     /* ---------- Print ---------- */
     @media print {
-      :root { --page-margin: 0.45in; }
+      :root { --page-margin: 0.6in; }
       body { background: #fff; }
       .controls, .fit-warning, .preview-area > .fit-warning,
       button, .note { display: none !important; }
@@ -288,10 +328,10 @@
         margin: 0;
         transform: none !important;
       }
-      .steps-list, .content-row, .section { break-inside: avoid; page-break-inside: avoid; }
+      .steps-list, .content-row, .section, .steps-list li { break-inside: avoid; page-break-inside: avoid; }
       @page {
         size: letter;
-        margin: 0.45in;
+        margin: 0;
       }
     }
   </style>
@@ -425,16 +465,13 @@
       }));
 
       const tipsHtml = conciseTips.map((t, i) =>
-        `<li><span class="step-lead">${escapeHtml(t.heading)}</span> ${escapeHtml(t.body)}</li>`
+        `<li><div class="step-num">${String(i + 1).padStart(2, "0")}</div><div><span class="step-lead">${escapeHtml(t.heading)}</span><p class="step-body">${escapeHtml(t.body)}</p></div></li>`
       ).join("");
 
-      const reassurance = buildReassurance(variant.intro, diagnosis.label);
+      const reassurance = buildParagraphs(variant.intro, 3, 44);
       const subtitle = buildSubtitle(diagnosis.label, variantKey);
-      const keyInstructions = buildKeyInstructions(conciseTips);
-      const avoidHtml = conciseTips.slice(3, 6).map(t => `<li>${escapeHtml(t.body)}</li>`).join("");
-
       const callHtml = variant.whenToCall.slice(0, 5).map(b =>
-        `<li>${escapeHtml(conciseBody(b, 16))}</li>`
+        `<li>${escapeHtml(conciseBody(b, 18))}</li>`
       ).join("");
 
       preview.innerHTML = `
@@ -447,7 +484,7 @@
               <div>${escapeHtml(clinic.cityStateZip)}</div>
               <div>${escapeHtml(clinic.phone)}${clinic.fax ? ` &middot; Fax: ${escapeHtml(clinic.fax)}` : ""}</div>
               <div>${escapeHtml(clinic.website)}</div>
-              ${Array.isArray(clinic.hours) && clinic.hours.length ? `<div><strong>Hours:</strong> ${clinic.hours.map(escapeHtml).join(" | ")}</div>` : ""}
+              <div class="series-label">PATIENT EDUCATION SERIES</div>
             </div>
           </header>
           <div class="title-block">
@@ -456,33 +493,26 @@
           </div>
 
           <div class="section info">
-            <h3>Overview</h3>
-            <p class="overview-copy">${escapeHtml(reassurance)}</p>
+            <h3>What This Means</h3>
+            ${reassurance.map(p => `<p class="overview-copy">${escapeHtml(p)}</p>`).join("")}
           </div>
 
           <div class="section">
-            <h3>Key Instructions</h3>
-            <p>${escapeHtml(keyInstructions)}</p>
+            <h3>Goal of Home Care</h3>
+            <p>${escapeHtml(buildGoalParagraph(variant.intro, diagnosis.label))}</p>
           </div>
 
           <h3>Self-Care Instructions</h3>
           <ol class="steps-list">${tipsHtml}</ol>
 
-          <div class="content-row">
-          <div class="section avoid">
-            <h3>Avoid or Limit</h3>
-            <ul>${avoidHtml}</ul>
-          </div>
-
           <div class="section call">
             <h3>When to Call Us</h3>
             <ul>${callHtml}</ul>
           </div>
-          </div>
 
           <div class="section closing"><p class="closing-note">${escapeHtml(conciseBody(variant.closing, 20))}</p></div>
 
-          <div class="footer">${escapeHtml(clinic.website)}</div>
+          <div class="footer"><span>${escapeHtml(clinic.name)}</span><span>${escapeHtml(diagnosis.label)}</span><span>REV ${new Date().toISOString().slice(0,10)}</span><span>PAGE 1 OF 1</span><span>${escapeHtml(clinic.website)}</span></div>
         </div>
       `;
 
@@ -521,6 +551,14 @@
         homeCare: "Focused home-care plan to support recovery."
       };
       return map[variantKey] || `A simple guide for ${dxLabel}.`;
+    }
+    function buildParagraphs(introArr, maxParagraphs = 3, maxWords = 44) {
+      if (!Array.isArray(introArr) || !introArr.length) return ["Symptoms can improve with steady home care."];
+      return introArr.slice(0, maxParagraphs).map((p) => conciseBody(p, maxWords));
+    }
+    function buildGoalParagraph(introArr, dxLabel) {
+      if (!Array.isArray(introArr) || !introArr.length) return `The goal of home care is to reduce symptoms from ${dxLabel} and improve daily function with steady habits.`;
+      return `The goal of home care is to reduce flare-ups, improve comfort, and support recovery through daily steps you can repeat consistently at home.`;
     }
     function sentenceLead(text) {
       const cleaned = String(text).trim().replace(/[.]+$/, "");
@@ -573,10 +611,10 @@
 
       // Size helpers (docx font sizes are in half-points).
       const SIZE_BODY    = 21;   // 10.5pt
-      const SIZE_TITLE   = 26;   // 13pt
+      const SIZE_TITLE   = 40;   // 20pt
       const SIZE_HEADING = 22;   // 11pt
       const SIZE_SMALL   = 18;   // 9pt
-      const FONT         = "Calibri";
+      const FONT         = "Georgia";
 
       const logoBytes = await fetchLogoBytes();
 
@@ -632,8 +670,10 @@
       }));
 
       const conciseTips = variant.tips.slice(0, 8).map(t => ({ heading: sentenceLead(t.heading), body: conciseBody(t.body, 56) }));
-      children.push(sectionParagraph("Overview", buildReassurance(variant.intro, diagnosis.label), SIZE_BODY, FONT));
-      children.push(sectionParagraph("Key Instructions", buildKeyInstructions(conciseTips), SIZE_BODY, FONT));
+      buildParagraphs(variant.intro, 3, 44).forEach((p, idx) => {
+        children.push(sectionParagraph(idx === 0 ? "What This Means" : "", p, SIZE_BODY, FONT));
+      });
+      children.push(sectionParagraph("Goal of Home Care", buildGoalParagraph(variant.intro, diagnosis.label), SIZE_BODY, FONT));
 
       /* ---------- Your Self-Care Steps (numbered) ---------- */
       children.push(headingParagraph("Self-Care Instructions", SIZE_HEADING, FONT));
@@ -645,15 +685,6 @@
             new TextRun({ text: t.heading + " ", bold: true, size: SIZE_BODY, font: FONT }),
             new TextRun({ text: t.body, size: SIZE_BODY, font: FONT })
           ]
-        }));
-      });
-
-      children.push(headingParagraph("Avoid or Limit", SIZE_HEADING, FONT));
-      conciseTips.slice(3, 6).forEach(t => {
-        children.push(new Paragraph({
-          bullet: { level: 0 },
-          spacing: { after: 50 },
-          children: [new TextRun({ text: t.body, size: SIZE_BODY, font: FONT })]
         }));
       });
 
@@ -669,7 +700,7 @@
 
       /* ---------- Closing ---------- */
       children.push(new Paragraph({
-        alignment: AlignmentType.CENTER,
+        alignment: AlignmentType.LEFT,
         spacing: { before: 160, after: 80 },
         border: { top:{style: BorderStyle.SINGLE,size: 3,color:"CBD5E1"} },
         children: [new TextRun({ text: conciseBody(variant.closing, 20), italics: true, size: SIZE_BODY, font: FONT })]
@@ -677,12 +708,12 @@
 
       /* ---------- Footer ---------- */
       children.push(new Paragraph({
-        alignment: AlignmentType.CENTER,
+        alignment: AlignmentType.LEFT,
         spacing: { before: 80 },
         border: {
           top: { color: "D1D5DB", space: 4, style: BorderStyle.SINGLE, size: 4 }
         },
-        children: [new TextRun({ text: clinic.website, size: SIZE_SMALL, color: "4B5563", font: FONT })]
+        children: [new TextRun({ text: `${clinic.name}  |  ${diagnosis.label}  |  PAGE 1 OF 1  |  ${clinic.website}`, size: SIZE_SMALL, color: "4B5563", font: "Consolas" })]
       }));
 
       const doc = new Document({
