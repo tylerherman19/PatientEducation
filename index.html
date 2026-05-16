@@ -6,17 +6,17 @@
   <title>Patient Education Generator</title>
   <style>
     :root {
-      --bg: #f3f4f6;
+      --bg: #eef2f6;
       --panel-bg: #ffffff;
       --border: #d1d5db;
       --border-soft: #e5e7eb;
       --text: #111827;
       --muted: #4b5563;
-      --accent: #0f766e;
-      --accent-hover: #115e59;
-      --warn-bg: #fef3c7;
-      --warn-border: #f59e0b;
-      --warn-text: #92400e;
+      --accent: #1f4e79;
+      --accent-hover: #173a5b;
+      --warn-bg: #fff8f3;
+      --warn-border: #b45309;
+      --warn-text: #7c2d12;
       --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter",
               "Helvetica Neue", Arial, sans-serif;
       --page-w: 8.5in;
@@ -167,112 +167,112 @@
       min-height: calc(var(--page-h) - 2 * var(--page-margin));
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 7px;
     }
     .letterhead {
       display: flex;
       gap: 10px;
       align-items: center;
-      margin-bottom: 2px;
+      margin-bottom: 0;
     }
     .letterhead img {
-      max-height: 0.45in;
+      max-height: 0.4in;
       max-width: 1.65in;
       object-fit: contain;
     }
     .letterhead-info {
-      font-size: 8.7pt;
+      font-size: 8.3pt;
       line-height: 1.2;
       color: #111;
     }
     .letterhead-info .clinic-name {
       font-weight: 700;
-      font-size: 9.7pt;
+      font-size: 9.2pt;
       margin-bottom: 2px;
     }
     .letterhead-meta {
-      color: #334155;
+      color: #475569;
       font-size: 8.2pt;
       margin-top: 1px;
     }
     .title-block {
-      background: #f0f9ff;
-      border: 1px solid #bfdbfe;
-      border-radius: 10px;
-      padding: 8px 10px;
+      border-top: 2px solid var(--accent);
+      border-bottom: 1px solid #cbd5e1;
+      padding: 7px 0 6px;
     }
     .handout-title {
-      margin: 0 0 2px;
-      font-size: 15pt;
+      margin: 0 0 3px;
+      font-size: 14pt;
       font-weight: 700;
-      color: #0f172a;
+      color: #0b1f33;
     }
     .title-sub {
       margin: 0;
-      font-size: 9.6pt;
-      color: #334155;
+      font-size: 9pt;
+      color: #475569;
     }
     .handout h3 {
-      font-size: 11.2pt;
+      font-size: 10.8pt;
       font-weight: 700;
       margin: 0 0 3px;
-      color: #134e4a;
+      color: #0b1f33;
     }
     .handout p {
       margin: 0 0 6px;
     }
     .section {
-      border-radius: 10px;
-      padding: 7px 9px;
-      border: 1px solid #dbeafe;
+      border-radius: 3px;
+      padding: 6px 8px;
+      border: 1px solid #d9e1ea;
       background: #f8fafc;
     }
-    .section.info { background: #f0f9ff; border-color: #bae6fd; }
-    .section.start { background: #ecfeff; border-color: #99f6e4; }
-    .section.avoid { background: #f8fafc; border-color: #e2e8f0; }
-    .section.call { background: #fff7ed; border-color: #fdba74; }
-    .section.closing { background: #f0fdfa; border-color: #99f6e4; text-align: center; }
+    .section.info { background: #f8fafc; border-color: #d6dee8; }
+    .section.start { background: #f7fbff; border-color: #c6d7ea; border-left: 3px solid var(--accent); }
+    .section.avoid { background: transparent; border: none; padding: 0; }
+    .section.call { background: var(--warn-bg); border: 1px solid var(--warn-border); }
+    .section.closing { background: transparent; border: none; text-align: left; padding: 0; }
     .mini-list, .section ul {
       margin: 2px 0 0 1.05em;
       padding: 0;
     }
     .section li { margin-bottom: 3px; }
-    .cards-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px;
+    .steps-list {
+      border-top: 2px solid #cbd5e1;
+      border-bottom: 1px solid #d8dee6;
+      margin-top: -1px;
     }
     .tip-card {
       break-inside: avoid;
       page-break-inside: avoid;
-      border: 1px solid #dbeafe;
-      border-radius: 9px;
+      border-top: 1px solid #e2e8f0;
       background: #ffffff;
-      padding: 6px 7px;
-      min-height: 62px;
+      padding: 5px 2px;
+      min-height: 0;
     }
     .tip-row { display: flex; gap: 6px; }
     .tip-num {
-      width: 18px; height: 18px; border-radius: 999px;
-      background: #0f766e; color: #fff; font-size: 8.7pt; font-weight: 700;
+      width: 18px; height: 18px; border-radius: 2px;
+      background: var(--accent); color: #fff; font-size: 8.3pt; font-weight: 700;
       display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
       margin-top: 1px;
     }
-    .tip-card h4 { margin: 0 0 2px; font-size: 9.8pt; color: #0f172a; }
+    .tip-card h4 { margin: 0 0 1px; font-size: 9.5pt; color: #0f172a; }
     .tip-card p { margin: 0; font-size: 9.2pt; color: #1f2937; line-height: 1.28; }
     .content-row {
       display: grid;
-      grid-template-columns: 1.25fr 1fr;
+      grid-template-columns: 1.2fr 1fr;
       gap: 8px;
     }
     .handout .footer {
       margin-top: auto;
-      padding-top: 4px;
+      padding-top: 6px;
       border-top: 1px solid #d1d5db;
       text-align: center;
       font-size: 8.3pt;
       color: #4b5563;
     }
+    .overview-copy { margin-bottom: 3px; }
+    .closing-note { font-size: 9pt; color: #334155; margin-top: 2px; }
 
     /* ---------- Responsive (narrow screens) ---------- */
     @media (max-width: 1100px) {
@@ -309,7 +309,7 @@
         margin: 0;
         transform: none !important;
       }
-      .cards-grid, .content-row, .section { break-inside: avoid; page-break-inside: avoid; }
+      .steps-list, .tip-card, .content-row, .section { break-inside: avoid; page-break-inside: avoid; }
       @page {
         size: letter;
         margin: 0.45in;
@@ -477,21 +477,21 @@
           </div>
 
           <div class="section info">
-            <h3>Good to Know</h3>
-            <p>${escapeHtml(reassurance)}</p>
+            <h3>Overview</h3>
+            <p class="overview-copy">${escapeHtml(reassurance)}</p>
           </div>
 
           <div class="section start">
-            <h3>Start Here Today</h3>
+            <h3>Key First Steps</h3>
             <ul class="mini-list">${startHere}</ul>
           </div>
 
-          <h3>Self-Care Action Steps</h3>
-          <div class="cards-grid">${tipsHtml}</div>
+          <h3>Self-Care Instructions</h3>
+          <div class="steps-list">${tipsHtml}</div>
 
           <div class="content-row">
           <div class="section avoid">
-            <h3>Try to Limit</h3>
+            <h3>Avoid or Limit</h3>
             <ul>${avoidHtml}</ul>
           </div>
 
@@ -501,7 +501,7 @@
           </div>
           </div>
 
-          <div class="section closing">${escapeHtml(conciseBody(variant.closing, 20))}</div>
+          <div class="section closing"><p class="closing-note">${escapeHtml(conciseBody(variant.closing, 20))}</p></div>
 
           <div class="footer">${escapeHtml(clinic.website)}</div>
         </div>
@@ -540,10 +540,10 @@
     }
     function buildSubtitle(dxLabel, variantKey) {
       const map = {
-        general: "Simple steps can help you feel better and stay in control.",
-        selfCare: "Daily habits that can lower symptoms and support healing.",
-        firstAppointment: "Here is what to focus on after today’s visit.",
-        homeCare: "A clear at-home plan you can start today."
+        general: "Standard guidance for home management and symptom control.",
+        selfCare: "Practical daily instructions to support recovery at home.",
+        firstAppointment: "Priorities to follow after your clinic visit today.",
+        homeCare: "Structured home-care plan for the next 1 to 2 weeks."
       };
       return map[variantKey] || `A simple guide for ${dxLabel}.`;
     }
@@ -648,11 +648,11 @@
       }));
 
       const conciseTips = variant.tips.slice(0, 8).map(t => ({ heading: shorten(t.heading, 34), body: conciseBody(t.body) }));
-      children.push(sectionBox("Good to Know", buildReassurance(variant.intro, diagnosis.label), "EAF6FF", "BBD8F2", SIZE_BODY, FONT));
-      children.push(sectionBox("Start Here Today", conciseTips.slice(0, 3).map((t, i) => `${i + 1}. ${t.heading}`).join("  •  "), "ECFEFF", "99F6E4", SIZE_BODY, FONT));
+      children.push(sectionBox("Overview", buildReassurance(variant.intro, diagnosis.label), "F8FAFC", "D6DEE8", SIZE_BODY, FONT));
+      children.push(sectionBox("Key First Steps", conciseTips.slice(0, 3).map((t, i) => `${i + 1}. ${t.heading}`).join("  •  "), "F7FBFF", "C6D7EA", SIZE_BODY, FONT));
 
       /* ---------- Your Self-Care Steps (numbered) ---------- */
-      children.push(headingParagraph("Self-Care Action Steps", SIZE_HEADING, FONT));
+      children.push(headingParagraph("Self-Care Instructions", SIZE_HEADING, FONT));
       conciseTips.forEach(t => {
         children.push(new Paragraph({
           numbering: { reference: "tip-numbering", level: 0 },
@@ -665,7 +665,7 @@
       });
 
       /* ---------- When to Call Us (bulleted) ---------- */
-      children.push(sectionHeaderParagraph("When to Call Us", "FFF4E5", "FDBA74", SIZE_HEADING, FONT));
+      children.push(sectionHeaderParagraph("When to Call Us", "FFF8F3", "B45309", SIZE_HEADING, FONT));
       variant.whenToCall.slice(0, 5).forEach(b => {
         children.push(new Paragraph({
           bullet: { level: 0 },
@@ -678,8 +678,7 @@
       children.push(new Paragraph({
         alignment: AlignmentType.CENTER,
         spacing: { before: 160, after: 80 },
-        shading: { fill: "F0FDFA" },
-        border: { top:{style: BorderStyle.SINGLE,size: 3,color:"99F6E4"}, bottom:{style: BorderStyle.SINGLE,size: 3,color:"99F6E4"}, left:{style: BorderStyle.SINGLE,size:3,color:"99F6E4"}, right:{style: BorderStyle.SINGLE,size:3,color:"99F6E4"}},
+        border: { top:{style: BorderStyle.SINGLE,size: 3,color:"CBD5E1"} },
         children: [new TextRun({ text: conciseBody(variant.closing, 20), italics: true, size: SIZE_BODY, font: FONT })]
       }));
 
